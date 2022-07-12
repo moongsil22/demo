@@ -44,7 +44,7 @@ demo
 [조회요청]    
 <img width="532" alt="조회요청모델" src="https://user-images.githubusercontent.com/12490512/178583503-64426b0a-b7e6-441c-ad60-c8121d2443a4.png">
 
-[등록응답]
+[조회응답]
 <img width="392" alt="조회응답모델" src="https://user-images.githubusercontent.com/12490512/178583509-ff96a456-7610-480d-b3c3-8077f03910e0.png">
 
 
