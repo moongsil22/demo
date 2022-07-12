@@ -20,7 +20,7 @@ public class SearchResponseDto {
     @ApiModelProperty(value = "사용자 이름", required = true,example = "가나다")
     String user_name;
 
-    @ApiModelProperty(value = "사용자 권한(OP:기관이용자,CUS:고객)",example = "CUS",allowableValues = "OP,CUS")
+    @ApiModelProperty(value = "사용자 권한(SUPER:기관,OP:기관이용자,CUS:고객)",example = "CUS",allowableValues = "SUPER,OP,CUS")
     String userRole;
 
     @ApiModelProperty(value = "사용자 식별자번호", required = true,example = "9910012345678")

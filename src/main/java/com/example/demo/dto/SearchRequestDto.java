@@ -14,14 +14,13 @@ import org.hibernate.validator.constraints.Length;
 @JsonSerialize
 public class SearchRequestDto {
 
-    @ApiModelProperty(value = "로그인한 사용자 Id",example = "user001")
-    @Length(max=10)
+    @ApiModelProperty(value = "로그인한 사용자 Id",example = "user001", required = true)
     String loginUserId;
 
-    @ApiModelProperty(value = "로그인한 사용자 기관코드", example = "ORG0001")
+    @ApiModelProperty(value = "로그인한 사용자 기관코드, 기업앱의 경우 필수", example = "ORG0001")
     String loginUserOrgCode;
 
 
-    @ApiModelProperty(value = "로그인한 사용자 권한(SUPER:기관 OP:기관이용자 CUS:고객)", example = "CUS", allowableValues = "SUPER,OP, CUS")
+    @ApiModelProperty(value = "로그인한 사용자 권한(SUPER:기관 OP:기관이용자 CUS:고객), 기업앱의 경우 필수", example = "CUS", allowableValues = "SUPER,OP, CUS")
     String loginUserRole;
 }

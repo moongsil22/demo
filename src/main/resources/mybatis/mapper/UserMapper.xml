@@ -71,14 +71,21 @@
                  WHERE a.juminno = b.juminno
                    AND a.juminno = c.juminno
                    AND c.orgcode = 'ORG0002'
+                <if test = 'loginUserRole.equals("CUS")'>
+                UNION ALL
+                SELECT user_id, user_name, 'CUS' as userrole, juminno, 'NONE' as orgcode , 'NONE' as org_name , 'NONE' as test_yn
+                FROM t_user
+                WHERE user_id =  #{loginUserId}
+                and juminno not in (select distinct juminno from t_user_mapping )
+                </if>
              )
         WHERE 1=1
         <choose>
-            <when test = 'loginUserRole.equals("CUS")'>
-                AND user_id = #{loginUserId}
+            <when test = 'loginUserRole.equals("SUPER") or loginUserRole.equals("OP")'>
+                AND orgcode = #{loginUserOrgCode}
             </when>
             <otherwise>
-                AND orgcode = #{loginUserOrgCode}
+                AND user_id = #{loginUserId}
             </otherwise>
         </choose>
     </select>
