@@ -92,7 +92,7 @@ public class RegiServiceImpl implements RegiService{
                 regiResponseDto.setRspCode("9999");
                 regiResponseDto.setRspMsg("already registered");
                 return regiResponseDto;
-            } else { //신규일 경우 사용자 테이블과 맵핑테이블 같이 적재
+            } else { //신규일 경우 사용자 테이블에 적재
                 regiRequestDto.setLoginUserId(regiRequestDto.getUserId());
 
                 userMapper.saveUser(regiRequestDto);
