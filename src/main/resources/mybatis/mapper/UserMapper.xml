@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.UserMapper">
+
+    <select id="findOrgRegiUser" resultType="com.example.demo.dto.OrgRegiUserDto">
+        SELECT user_id , user_name, userrole, juminno, orgcode
+          FROM (
+            SELECT b.user_id, a.user_name, a.userrole, a.juminno, 'ORG0001' as orgcode
+              FROM t_org0001 a, t_user b, t_user_mapping c
+             WHERE a.juminno = b.juminno
+               AND a.juminno = c.juminno
+               AND a.juminno = #{juminNo}
+               AND c.orgcode = 'ORG0001'
+            UNION ALL
+            SELECT b.user_id, a.user_name, a.userrole, a.juminno, 'ORG0002' as orgcode
+              FROM t_org0002 a, t_user b, t_user_mapping c
+             WHERE a.juminno = b.juminno
+               AND a.juminno = c.juminno
+               AND a.juminno = #{juminNo}
+               AND c.orgcode = 'ORG0002'
+            )
+          WHERE 1=1
+            AND orgcode = #{loginUserOrgCode}
+    </select>
+
+    <select id="findUser" resultType="com.example.demo.dto.UserDto">
+        SELECT user_id, user_name, juminno
+          FROM t_user WHERE juminno = #{juminNo}
+    </select>
+
+    <insert id="saveUser" parameterType="com.example.demo.dto.RegiRequestDto">
+        INSERT INTO t_user(user_id,user_name,user_pw,juminno,regi_id,regi_date,modify_id,modidate)
+        VALUES (#{userId},#{userName},#{userPw},#{juminNo},#{loginUserId},SYSDATE,#{loginUserId}, SYSDATE)
+    </insert>
+
+    <insert id="saveUserMapping" parameterType="com.example.demo.dto.RegiRequestDto">
+        INSERT INTO t_user_mapping(orgcode,juminno,regi_id,regi_date,modify_id,modidate)
+        VALUES (#{loginUserOrgCode},#{juminNo},#{loginUserId},SYSDATE,#{loginUserId}, SYSDATE)
+    </insert>
+
+    <insert id="saveUserOrg0001" parameterType="com.example.demo.dto.RegiRequestDto">
+        INSERT INTO t_org0001(user_name,juminno,userrole,regi_id,regi_date,modify_id,modidate)
+        VALUES (#{userName},#{juminNo},#{userRole},#{loginUserId},SYSDATE,#{loginUserId}, SYSDATE)
+    </insert>
+
+    <insert id="saveUserOrg0002" parameterType="com.example.demo.dto.RegiRequestDto">
+        INSERT INTO t_org0002(user_name,juminno,userrole,regi_id,regi_date,modify_id,modidate)
+        VALUES (#{userName},#{juminNo},#{userRole},#{loginUserId},SYSDATE,#{loginUserId}, SYSDATE)
+    </insert>
+
+    <select id="isOrgCode" parameterType="String" resultType="boolean">
+        SELECT DECODE(COUNT(*),1,1,0)
+        FROM t_org_info
+        WHERE ORGCODE = #{loginUserOrgCode}
+    </select>
+
+    <select id="getUserList" resultType="com.example.demo.dto.SearchResponseDto">
+        SELECT user_id , user_name, userrole, juminno, orgcode , org_name , test_yn
+        FROM (
+                 SELECT b.user_id, a.user_name, a.userrole, a.juminno, 'ORG0001' as orgcode , (select org_name from T_ORG_INFO where ORGCODE = 'ORG0001') as org_name , 'corona_test_yn:'||a.CORONA_TEST_YN as test_yn
+                 FROM t_org0001 a, t_user b, t_user_mapping c
+                 WHERE a.juminno = b.juminno
+                   AND a.juminno = c.juminno
+                   AND c.orgcode = 'ORG0001'
+                 UNION ALL
+                 SELECT b.user_id, a.user_name, a.userrole, a.juminno, 'ORG0002' as orgcode , (select org_name from T_ORG_INFO where ORGCODE = 'ORG0002') as org_name , 'eye_test_yn:'||a.EYE_TEST_YN as test_yn
+                 FROM t_org0002 a, t_user b, t_user_mapping c
+                 WHERE a.juminno = b.juminno
+                   AND a.juminno = c.juminno
+                   AND c.orgcode = 'ORG0002'
+             )
+        WHERE 1=1
+        <choose>
+            <when test = 'loginUserRole.equals("CUS")'>
+                AND user_id = #{loginUserId}
+            </when>
+            <otherwise>
+                AND orgcode = #{loginUserOrgCode}
+            </otherwise>
+        </choose>
+    </select>
+
+
+</mapper>

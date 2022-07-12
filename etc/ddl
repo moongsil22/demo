@@ -1,0 +1,115 @@
+-- auto-generated definition
+-- No source text available
+CREATE TABLE t_user
+(
+    user_id      VARCHAR2(20)	NOT NULL,
+    user_name    VARCHAR2(10)	NOT NULL,
+    user_pw      VARCHAR2(50)	NOT NULL,
+    juminno      VARCHAR2(13)	NOT NULL,
+    regi_id      VARCHAR2(20)	NOT NULL,
+    regi_date    DATE	        NOT NULL,
+    modify_id    VARCHAR2(20)	NOT NULL,
+    modidate     DATE	        NOT NULL,
+    CONSTRAINT user_pk PRIMARY KEY (user_id)
+);
+
+COMMENT ON TABLE t_user IS '사용자정보';
+
+COMMENT ON COLUMN t_user.user_id   IS '아이디';
+COMMENT ON COLUMN t_user.user_name IS '성명';
+COMMENT ON COLUMN t_user.user_pw   IS '비밀번호';
+COMMENT ON COLUMN t_user.juminno   IS '주민번호';
+COMMENT ON COLUMN t_user.regi_id   IS '등록자아이디';
+COMMENT ON COLUMN t_user.regi_date IS '등록일';
+COMMENT ON COLUMN t_user.modify_id IS '수정자아이디';
+COMMENT ON COLUMN t_user.modidate  IS '수정일';
+
+CREATE TABLE t_user_mapping
+(
+    orgcode    VARCHAR2(10)	NOT NULL,
+    juminno      VARCHAR2(13)	NOT NULL,
+    regi_id      VARCHAR2(20)	NOT NULL,
+    regi_date    DATE	        NOT NULL,
+    modify_id    VARCHAR2(20)	NOT NULL,
+    modidate     DATE	        NOT NULL,
+    CONSTRAINT user_mapping_pk PRIMARY KEY (orgcode,juminno)
+);
+
+COMMENT ON TABLE t_user_mapping IS '사용자_기관_맵핑 정보';
+
+COMMENT ON COLUMN t_user_mapping.orgcode   IS '기관코드';
+COMMENT ON COLUMN t_user_mapping.juminno   IS '주민번호';
+COMMENT ON COLUMN t_user_mapping.regi_id   IS '등록자아이디';
+COMMENT ON COLUMN t_user_mapping.regi_date IS '등록일';
+COMMENT ON COLUMN t_user_mapping.modify_id IS '수정자아이디';
+COMMENT ON COLUMN t_user_mapping.modidate  IS '수정일';
+
+
+
+CREATE TABLE t_org0001
+(
+    user_name    VARCHAR2(10)	NOT NULL,
+    juminno      VARCHAR2(13)	NOT NULL,
+    userrole     VARCHAR2(10)	NOT NULL,
+    corona_test_yn  CHAR(1) default 'N',
+    regi_id      VARCHAR2(20)	NOT NULL,
+    regi_date    DATE	        NOT NULL,
+    modify_id    VARCHAR2(20)	NOT NULL,
+    modidate     DATE	        NOT NULL,
+    CONSTRAINT org0001 PRIMARY KEY (juminno)
+);
+
+COMMENT ON TABLE t_org0001 IS 'org1 기관 사용자 정보';
+
+COMMENT ON COLUMN t_org0001.user_name IS '성명';
+COMMENT ON COLUMN t_org0001.juminno   IS '주민번호';
+COMMENT ON COLUMN t_org0001.userrole   IS '사용자 권한';
+COMMENT ON COLUMN t_org0001.corona_test_yn   IS '코로나테스트 여부';
+COMMENT ON COLUMN t_org0001.regi_id   IS '등록자아이디';
+COMMENT ON COLUMN t_org0001.regi_date IS '등록일';
+COMMENT ON COLUMN t_org0001.modify_id IS '수정자아이디';
+COMMENT ON COLUMN t_org0001.modidate  IS '수정일';
+
+
+CREATE TABLE t_org0002
+(
+    user_name    VARCHAR2(10)	NOT NULL,
+    juminno      VARCHAR2(13)	NOT NULL,
+    userrole     VARCHAR2(10)	NOT NULL,
+    eye_test_yn  CHAR(1) default 'N',
+    regi_id      VARCHAR2(20)	NOT NULL,
+    regi_date    DATE	        NOT NULL,
+    modify_id    VARCHAR2(20)	NOT NULL,
+    modidate     DATE	        NOT NULL,
+    CONSTRAINT org0002 PRIMARY KEY (juminno)
+);
+
+COMMENT ON TABLE t_org0002 IS 'org2 기관 사용자 정보';
+
+COMMENT ON COLUMN t_org0002.user_name IS '성명';
+COMMENT ON COLUMN t_org0002.juminno   IS '주민번호';
+COMMENT ON COLUMN t_org0001.userrole   IS '사용자 권한';
+COMMENT ON COLUMN t_org0002.eye_test_yn   IS '시력검사 여부';
+COMMENT ON COLUMN t_org0002.regi_id   IS '등록자아이디';
+COMMENT ON COLUMN t_org0002.regi_date IS '등록일';
+COMMENT ON COLUMN t_org0002.modify_id IS '수정자아이디';
+COMMENT ON COLUMN t_org0002.modidate  IS '수정일';
+
+
+CREATE TABLE t_org_info
+(
+    orgcode    VARCHAR2(10)	NOT NULL,
+    org_name      VARCHAR2(20)	NOT NULL,
+    org_tbl      VARCHAR2(20)	NOT NULL,
+    CONSTRAINT orgcode PRIMARY KEY (orgcode)
+);
+
+COMMENT ON TABLE t_org_info IS '기관 코드 정보';
+
+COMMENT ON COLUMN t_org_info.orgcode IS '기관코드';
+COMMENT ON COLUMN t_org_info.org_name   IS '기관명';
+COMMENT ON COLUMN t_org_info.org_tbl   IS '사용 테이블';
+
+
+insert into t_org_info values('ORG0001' , '가나다 내과' , 't_org0001');
+insert into t_org_info values('ORG0002' , '마바사 안과' , 't_org0002');
