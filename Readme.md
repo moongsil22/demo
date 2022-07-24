@@ -87,3 +87,17 @@ RegiServiceImpl.java 파일 참조
 2. 조회 
     - 로그인한 사용자의 권한이 고객일 경우 고객이 등록된 모든 기관정보 조회 가능
     - 로그인한 사용자의 권한이 기관이용자와 기관일 경우 소속된 기관의 모든 회원 정보 조회 가능 
+
+# 8. 로그인 구현 (spring-security-jwt 이용)
+
+    - id/pw/기관코드로 로그인을 하면 토큰을 발급해준다. 서비스 호출 시, JwtFilter에서 클라이언트 헤더의 토큰값을 검증한다.
+
+[t_token_info: 토큰발급정보]
+<img width="1104" alt="t_token_info" src="https://user-images.githubusercontent.com/12490512/180652575-0f8d71ff-a760-4bfe-888b-d9ca6c3fc10c.png">
+1. 로그인
+<img width="1084" alt="로그인요청" src="https://user-images.githubusercontent.com/12490512/180652574-82db5a61-9963-4398-b6de-53bd36984d26.png">
+<img width="1051" alt="로그인응답" src="https://user-images.githubusercontent.com/12490512/180652572-a8c9343f-ae8d-450d-b147-91cb70fd9a23.png">
+2. 토큰재발급
+<img width="1067" alt="리프레시요청" src="https://user-images.githubusercontent.com/12490512/180652568-0736fb3d-da1c-4d7e-871a-58bd0cc855ea.png">
+<img width="1053" alt="리프레시응답" src="https://user-images.githubusercontent.com/12490512/180652577-fd112dac-5aae-43b5-9b9f-967ba7f0854c.png">
+
