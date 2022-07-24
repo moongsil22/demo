@@ -31,13 +31,4 @@ public class TestController {
     }
 
 
-    @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto loginRequestDto) {
-        return ResponseEntity.ok(regiService.login(loginRequestDto));
-    }
-
-    @PostMapping("/reissue")
-    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
-        return ResponseEntity.ok(regiService.reissue(tokenRequestDto));
-    }
 }

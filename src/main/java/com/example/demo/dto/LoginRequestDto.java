@@ -18,11 +18,11 @@ import javax.validation.constraints.NotNull;
 public class LoginRequestDto {
 
 
-    @ApiModelProperty(value = "사용자 아이디", required = true,example = "user001")
+    @ApiModelProperty(value = "사용자 아이디", required = true,example = "user0011")
     @NotNull
     String loginUserId;
 
-    @ApiModelProperty(value = "사용자 패스워드", required = true,example = "aa1234")
+    @ApiModelProperty(value = "사용자 패스워드", required = true,example = "1234")
     @NotNull
     String userPw;
 

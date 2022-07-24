@@ -62,7 +62,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("Practice Swagger")
-                .description("practice swagger config, Authorizie 토큰입력예시(Bearer accesstoken) prefix로 Bearer 공백 스페이스1칸 입력 필수")
+                .description("practice swagger config,\n Authorizie 토큰입력예시: \nBearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ1c2VyMDAxMUBPUkcwMDAxIiwiYXV0aCI6IkNVUyIsImV4cCI6MTY1ODE3NTI2MH0.OQ4vKyKM4F_8GECfJLu5wGwACT98XiEiz7Ny8pKKUOHw_UGyJPWFvdBobhh4AkTsTYZwY8hNcKBjHpqoFIJttg\nprefix로 Bearer 공백 스페이스1칸 입력 필수")
                 .version("1.0")
                 .build();
     }
