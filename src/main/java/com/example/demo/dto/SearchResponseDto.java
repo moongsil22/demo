@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,4 +38,6 @@ public class SearchResponseDto {
     @JsonProperty(value="testInfo")
     @ApiModelProperty(value = "검사정보", required = true,example = "corona_test_yn:Y")
     String test_yn;
+
+
 }

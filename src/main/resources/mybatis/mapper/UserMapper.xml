@@ -73,7 +73,7 @@
                    AND c.orgcode = 'ORG0002'
                 <if test = 'loginUserRole.equals("CUS")'>
                 UNION ALL
-                SELECT user_id, user_name, 'CUS' as userrole, juminno, 'NONE' as orgcode , 'NONE' as org_name , 'NONE' as test_yn
+                SELECT user_id, user_name, 'CUS' as userrole, juminno, '' as orgcode , 'NONE' as org_name , 'NONE' as test_yn
                 FROM t_user
                 WHERE user_id =  #{loginUserId}
                 and juminno not in (select distinct juminno from t_user_mapping )
@@ -90,5 +90,63 @@
         </choose>
     </select>
 
+    <select id="getUserInfo" resultType="com.example.demo.dto.LoginResponseDto">
+        SELECT user_id , user_pw, user_name, userrole, juminno, orgcode
+        FROM (
+        <choose>
+        <when test = 'loginUserOrgCode !=null and !loginUserOrgCode.equals("")'>
+            SELECT b.user_id, b.USER_PW, a.user_name, a.userrole, a.juminno, 'ORG0001' as orgcode
+            FROM t_org0001 a, t_user b, t_user_mapping c
+            WHERE a.juminno = b.juminno
+            AND a.juminno = c.juminno
+            AND c.orgcode = 'ORG0001'
+            UNION ALL
+            SELECT b.user_id, b.USER_PW, a.user_name, a.userrole, a.juminno, 'ORG0002' as orgcode
+            FROM t_org0002 a, t_user b, t_user_mapping c
+            WHERE a.juminno = b.juminno
+            AND a.juminno = c.juminno
+            AND c.orgcode = 'ORG0002'
+        </when>
+        <otherwise>
+        SELECT user_id, user_pw, user_name, 'CUS' as userrole, juminno, '' as orgcode
+        FROM t_user
+        </otherwise>
+        </choose>
+        )
+        WHERE 1=1
+        <choose>
+        <when test = 'loginUserOrgCode !=null and !loginUserOrgCode.equals("")'>
+            AND user_id =  #{loginUserId}
+            AND orgcode = #{loginUserOrgCode}
+        </when>
+        <otherwise>
+            AND user_id =  #{loginUserId}
+        </otherwise>
+        </choose>
+
+    </select>
+
+
+    <select id="findTokenById" resultType="com.example.demo.dto.RefreshToken">
+        SELECT user_id, ACCESSTOKEN, EXPIRESIN, REFRESHTOKEN
+        FROM t_token_info
+        WHERE 1=1
+          AND USER_ID = #{userId}
+    </select>
+
+    <update id="refreshTokenSave" parameterType="com.example.demo.dto.RefreshToken">
+
+    MERGE INTO t_token_info
+    USING DUAL
+    ON (USER_ID = #{userId})
+    WHEN MATCHED THEN
+    UPDATE SET ACCESSTOKEN = #{accessToken},
+               EXPIRESIN = #{accessExpiresIn},
+               REFRESHTOKEN = #{refreshToken},
+               MODIDATE = SYSDATE
+    WHEN NOT MATCHED THEN
+    INSERT (USER_ID,ACCESSTOKEN,EXPIRESIN,REFRESHTOKEN,REGI_DATE,MODIDATE)
+    VALUES (#{userId},#{accessToken},#{accessExpiresIn},#{refreshToken},sysdate,sysdate)
+    </update>
 
 </mapper>

@@ -17,4 +17,9 @@ public interface UserMapper {
     void saveUserMapping(RegiRequestDto regiRequestDto);
     void saveUserOrg0001(RegiRequestDto regiRequestDto);
     void saveUserOrg0002(RegiRequestDto regiRequestDto);
+    LoginResponseDto getUserInfo(String loginUserId, String loginUserOrgCode);
+
+
+    void refreshTokenSave(RefreshToken refreshToken);
+    RefreshToken findTokenById(String userId);
 }

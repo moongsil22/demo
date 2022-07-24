@@ -4,7 +4,7 @@ CREATE TABLE t_user
 (
     user_id      VARCHAR2(20)	NOT NULL,
     user_name    VARCHAR2(10)	NOT NULL,
-    user_pw      VARCHAR2(50)	NOT NULL,
+    user_pw      VARCHAR2(100)	NOT NULL,
     juminno      VARCHAR2(13)	NOT NULL,
     regi_id      VARCHAR2(20)	NOT NULL,
     regi_date    DATE	        NOT NULL,
@@ -113,3 +113,17 @@ COMMENT ON COLUMN t_org_info.org_tbl   IS '사용 테이블';
 
 insert into t_org_info values('ORG0001' , '가나다 내과' , 't_org0001');
 insert into t_org_info values('ORG0002' , '마바사 안과' , 't_org0002');
+
+
+CREATE TABLE t_token_info
+(
+    user_id      VARCHAR2(30)	NOT NULL,
+    accessToken  VARCHAR2(200)	NOT NULL,
+    EXPIRESIN    varchar2(20)   NOT NULL,
+    refreshToken VARCHAR2(200)	NOT NULL,
+    regi_date    DATE	        NOT NULL,
+    modidate     DATE	        NOT NULL,
+    CONSTRAINT tokeninfo PRIMARY KEY (user_id)
+
+);
+

@@ -6,8 +6,16 @@ import java.util.List;
 
 public interface RegiService {
 
-    public List<SearchResponseDto> getUserList(SearchRequestDto searchRequestDto);
+    List<SearchResponseDto> getUserList(SearchRequestDto searchRequestDto);
 
-    public RegiResponseDto save(RegiRequestDto regiRequestDto);
+    RegiResponseDto save(RegiRequestDto regiRequestDto);
+
+    LoginResponseDto getUserInfo();
+
+    LoginResponseDto getUserInfoById(LoginRequestDto loginRequestDto);
+
+    TokenDto login(LoginRequestDto loginRequestDto);
+
+    TokenDto reissue(TokenRequestDto tokenRequestDto);
 
 }

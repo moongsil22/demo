@@ -1,12 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.RegiRequestDto;
-import com.example.demo.dto.RegiResponseDto;
-import com.example.demo.dto.SearchRequestDto;
-import com.example.demo.dto.SearchResponseDto;
+import com.example.demo.dto.*;
 import com.example.demo.service.RegiService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,5 +28,16 @@ public class TestController {
     @ApiOperation(value = "사용자 조회", notes = "사용자 권한(기관,개인)에 따라 조회를 합니다")
     public List<SearchResponseDto> search(@Valid @RequestBody SearchRequestDto searchRequestDto) {
         return regiService.getUserList(searchRequestDto);
+    }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+        return ResponseEntity.ok(regiService.login(loginRequestDto));
+    }
+
+    @PostMapping("/reissue")
+    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
+        return ResponseEntity.ok(regiService.reissue(tokenRequestDto));
     }
 }

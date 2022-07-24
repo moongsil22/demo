@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotNull;
 
@@ -46,4 +49,10 @@ public class RegiRequestDto {
 
     @ApiModelProperty(value = "로그인한 사용자 권한(SUPER:기관 OP:기관이용자 CUS:고객), 앱경로 ORGAPP:기관앱일 경우 필수", example = "SUPER", allowableValues = "SUPER,OP, CUS")
     String loginUserRole;
+
+/*    public void setUserPw(String userPw) {
+        PasswordEncoder passwordEncoder = null;
+        this.userPw = passwordEncoder.encode(userPw);
+    }*/
+
 }
